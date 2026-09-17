@@ -1,8 +1,16 @@
 @import "tailwindcss";
-
+* {
+  box-sizing: border-box;
+}
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --dark: #1f4a63;
+  --light: #f2e9d8;
+  --tab-h: 500px;
+  --notch-w: 220px;
+  --notch-slant: 30px;
+  --overlap: 240px;
 }
 
 @theme inline {
@@ -20,7 +28,68 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.stack {
+  width: 100%;
+  max-width: 92vw;
+  padding: 20px 0;
+  position: relative;
+  z-index: 1;
+}
+.tab {
+  font-family: var(--font-geist);
+  position: relative;
+  height: var(--tab-h);
+  margin-top: calc(-1 * var(--overlap));
+  display: flex;
+  align-items: flex-start;
+  padding: 48px 32px;
+  font-weight: 400;
+  font-size: 32px;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    filter 220ms ease;
+  background-clip: padding-box;
+  /* phần "núm" hình thang phía trên bên trái/phải, dùng clip-path */
+  clip-path: polygon(
+    0 var(--notch-slant),
+    var(--notch-x, 60px) var(--notch-slant),
+    calc(var(--notch-x, 60px) + var(--notch-slant)) 0,
+    calc(var(--notch-x, 60px) + var(--notch-w, var(--notch-w))) 0,
+    calc(
+        var(--notch-x, 60px) + var(--notch-w, var(--notch-w)) +
+          var(--notch-slant)
+      )
+      var(--notch-slant),
+    100% var(--notch-slant),
+    100% 100%,
+    0 100%
+  );
+}
+
+.tab.dark {
+  background: var(--dark);
+  color: var(--light);
+  text-align: left;
+  justify-content: start;
+}
+.tab.light {
+  background: var(--light);
+  color: var(--dark);
+  text-align: right;
+  justify-content: end;
+}
+
+.tab:hover {
+  transform: translateY(calc(-1 * var(--overlap) / 2));
+  /* z-index: 999 !important; */
+}
+
+.stack .tab:first-child {
+  margin-top: 0;
+} 
