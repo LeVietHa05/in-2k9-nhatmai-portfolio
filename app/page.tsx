@@ -2,65 +2,15 @@ import Image from "next/image";
 import { TabItem } from "./components/TabStack";
 import TabStack from "./components/TabStack";
 import TabStack2 from "./components/TabStack2";
-const data: TabItem[] = [
-  { title: "Interstellar", variant: "dark", notchX: 10, notchW: 200, link: "" },
-  {
-    title: "Eternal Sunshine of the Spotless Mind",
-    variant: "light",
-    notchX: 70,
-    notchW: 200,
-    link: "",
-  },
-  { title: "Pearl", variant: "dark", notchX: 10, notchW: 200, link: "" },
-  { title: "Coraline", variant: "light", notchX: 70, notchW: 200, link: "" },
-  { title: "MAI", variant: "dark", notchX: 10, notchW: 200, link: "" },
-  { title: "Mamma Mia", variant: "light", notchX: 70, notchW: 200, link: "" },
-  {
-    title: "AI - Artificial Intelligence",
-    variant: "dark",
-    notchX: 10,
-    notchW: 200,
-    link: "",
-  },
-  {
-    title: "Dead Poets Society",
-    variant: "light",
-    notchX: 70,
-    notchW: 200,
-    link: "",
-  },
-  {
-    title: "Adventure Time",
-    variant: "dark",
-    notchX: 10,
-    notchW: 200,
-    link: "",
-  },
-  { title: "Better Days", variant: "light", notchX: 70, notchW: 200, link: "" },
-  {
-    title: "Spider-Man: No Way Home",
-    variant: "dark",
-    notchX: 10,
-    notchW: 200,
-    link: "",
-  },
-  {
-    title: "Little Woman",
-    variant: "light",
-    notchX: 70,
-    notchW: 200,
-    link: "",
-  },
-  { title: "Seven (1995)", variant: "dark", notchX: 10, notchW: 200, link: "" },
-  {
-    title: "Before Sunrise",
-    variant: "light",
-    notchX: 70,
-    notchW: 200,
-    link: "",
-  },
-  // ...
-];
+import { getArticles } from "./data/articles";
+
+const data: TabItem[] = getArticles().map((article) => ({
+  title: article.title,
+  variant: article.variant,
+  notchX: article.notchX,
+  notchW: article.notchW,
+  link: article.draft ? "" : `/detail/${article.id}`,
+}));
 
 export default function Home() {
   return (
@@ -142,7 +92,7 @@ export default function Home() {
                 // Xoay nằm ngang 90 độ, sau đó skewX(-45deg) để kéo nghiêng bóng về bên trái
                 transform: "rotateX(180deg) skewX(-45deg)",
                 // Tạo hiệu ứng bóng mờ nhạt dần ra xa nếu muốn (Tùy chọn, có thể bỏ mask nếu muốn bóng phẳng lì)
-                 
+
                 // WebkitMaskImage:
                 //   "linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))",
               }}
